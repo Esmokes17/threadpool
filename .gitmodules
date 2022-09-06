@@ -1,0 +1,3 @@
+[submodule "BigFloat"]
+	path = BigFloat
+	url = git@github.com:Mariotti94/BigFloat.git

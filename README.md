@@ -16,14 +16,12 @@ int main() {
     // make threadpool
     ThreadPool t(2);
     // execute functions
-    auto a = t.execute(muti_two, 2.5);
+    auto res = t.execute(muti_two, 2.5);
     t.execute(hello);
-    // wait for finish the jobs
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-    // finish threadpool
-    t.terminate();
+    // wait until finish threadpool
+    t.join();
     // print result multi_two funtion
-    std::cout << "result: " << a.get();
+    std::cout << "result: " << res.get();
     return 0;
 }
 
@@ -38,10 +36,26 @@ $ ./threadpool
 result multi function: 5
 ```
 
-## REFRENCES
+## Example
+`example.cpp` is print pi number with 100 digits after point.
+
+for run example :
+```console
+$ make run
+g++ -Wall -pthread -std=c++17 -c example.cpp -o example.o
+g++ -c -Wall -pthread -std=c++17 BigFloat/BigFloat.cc
+g++ -Wall -pthread -std=c++17 example.o BigFloat.o -o example
+./example
+PI:
++3.1415926535897932384626433832795028841971693993751058209749445923078164062862089981395381067916552216
+```
+## REFERENCES
 based on:
 - https://www.sobyte.net/post/2022-05/design-a-thread-pool/#thread-pooling
 - https://github.com/progschj/ThreadPool/blob/master/ThreadPool.h
+
+## Third Party
+- [BigFloat](https://github.com/Mariotti94/BigFloat)
 
 ## TODO
 - [ ] compatible with c++11 or lower
